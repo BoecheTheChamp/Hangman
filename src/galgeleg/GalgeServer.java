@@ -23,7 +23,7 @@ public class GalgeServer {
      //publisher server, med port:9996 
    //Benytter logikken fra galgelogik. 
    //Endpoint.publish("http://localhost:9996/kontotjeneste", gs);
-   Endpoint.publish("http://ubuntu4.saluton.dk:9996/GalgeServer", gs);
+   Endpoint.publish("http://ubuntu4.saluton.dk:9396/GalgeServer", gs);
     
     System.out.println("Serveren er publiseret");
     
