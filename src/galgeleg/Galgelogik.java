@@ -14,6 +14,12 @@ import brugerautorisation.data.Bruger;
 import brugerautorisation.transport.rmi.Brugeradmin;
 import java.rmi.server.UnicastRemoteObject;
 import javax.jws.WebService;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import org.json.JSONObject;
+
 
 @WebService(endpointInterface = "galgeleg.GalgeInterface")
 
@@ -175,7 +181,23 @@ public class Galgelogik extends UnicastRemoteObject implements GalgeInterface{
 
 
   public void hentOrdFraDr() throws Exception {
-    String data = hentUrl("https://dr.dk");
+      
+    Client client = ClientBuilder.newClient();
+    Response res = client.target("http://www.dr.dk/mu-online/api/1.3/page/tv/live/dr1")
+            .request(MediaType.APPLICATION_JSON).get();
+    String svar = res.readEntity(String.class);
+    //System.out.println(svar);
+    try {
+    //Parse svar som et JSON-objekt
+    JSONObject json = new JSONObject(svar);
+    //System.out.println("Mulige ord: " json.getJSONObject("Type").getString("Slug"));
+    String data = "";
+    data += json.getJSONObject("0").getJSONArray("NowNext");
+    System.out.println("data = " + data);
+    } catch (Exception e) {
+    e.printStackTrace();
+    }
+      /*    String data = hentUrl("https://dr.dk");
     //System.out.println("data = " + data);
 
     data = data.substring(data.indexOf("<body")). // fjern headere
@@ -197,11 +219,15 @@ public class Galgelogik extends UnicastRemoteObject implements GalgeInterface{
 
     System.out.println("muligeOrd = " + muligeOrd);
     nulstil();
+  }*/
   }
     public String outputTilKlient()
   {
       return OutputClient.toString();
   }
+    class Type {
+        
+    }
   
   //@Override
     public boolean hentBruger(String brugernavn, String password) {
