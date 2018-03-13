@@ -105,7 +105,7 @@ public class Galgelogik extends UnicastRemoteObject implements GalgeInterface{
     antalForkerteBogstaver = 0;
     spilletErVundet = false;
     spilletErTabt = false;
-    ordet = muligeOrd.get(new Random().nextInt(muligeOrd.size()));
+    ordet = muligeOrd.get(new Random().nextInt(muligeOrd.size()-1));
     opdaterSynligtOrd();
   }
 
@@ -179,21 +179,26 @@ public class Galgelogik extends UnicastRemoteObject implements GalgeInterface{
     return sb.toString();
   }
 
-
   public void hentOrdFraDr() throws Exception {
-      
+      //https://www.dr.dk/mu-online/Help/1.3/Api/GET-api-1.3-page-tv-front
     Client client = ClientBuilder.newClient();
-    Response res = client.target("http://www.dr.dk/mu-online/api/1.3/page/tv/live/dr1")
+    Response res = client.target("https://www.dr.dk/mu-online/api/1.3/page/tv/live/dr1")
             .request(MediaType.APPLICATION_JSON).get();
     String svar = res.readEntity(String.class);
     //System.out.println(svar);
     try {
+
+//Object ole = res.getEntity();
     //Parse svar som et JSON-objekt
     JSONObject json = new JSONObject(svar);
     //System.out.println("Mulige ord: " json.getJSONObject("Type").getString("Slug"));
     String data = "";
-    data += json.getJSONObject("0").getJSONArray("NowNext");
+    //data += json.getJSONArray("Live").getJSONObject(0).getJSONObject("Now").getString("Description");
+    data += json.getJSONObject("NowNext").getJSONObject("Now").getString("Description");
     System.out.println("data = " + data);
+    muligeOrd.clear();
+    muligeOrd.addAll(new HashSet<String>(Arrays.asList(data.split(" "))));
+    
     } catch (Exception e) {
     e.printStackTrace();
     }
@@ -221,6 +226,7 @@ public class Galgelogik extends UnicastRemoteObject implements GalgeInterface{
     nulstil();
   }*/
   }
+ 
     public String outputTilKlient()
   {
       return OutputClient.toString();
