@@ -18,12 +18,12 @@ public class GalgeServer {
     public static void main(String[] args) throws RemoteException, MalformedURLException, Exception
     { 
         //java.rmi.registry.LocateRegistry.createRegistry(1500);
-    java.rmi.registry.LocateRegistry.createRegistry(1593);
+    //java.rmi.registry.LocateRegistry.createRegistry(1530);
     GalgeInterface gs = new Galgelogik();
      //publisher server, med port:9996 
    //Benytter logikken fra galgelogik. 
    //Endpoint.publish("http://localhost:9996/kontotjeneste", gs);
-   Endpoint.publish("http://ubuntu4.saluton.dk:9396/GalgeServer", gs);
+   Endpoint.publish("http://ubuntu4.saluton.dk:9796/GalgeServer", gs);
     
     System.out.println("Serveren er publiseret");
     

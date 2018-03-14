@@ -24,7 +24,7 @@ public class GalgeKlientTilServer {
         //URL url = new URL("http://ubuntu4.saluton.dk:9919/GalgeServer?wsdl"); // soap
         //QName qname = new QName("http://galgeleg/", "KontoImplService");
         
-        URL url = new URL("http://ubuntu4.saluton.dk:9919/GalgeServer?wsdl"); // soap - Forbinder til det navn serveren udgiver sig på "GalgeServer"
+        URL url = new URL("http://ubuntu4.saluton.dk:9796/GalgeServer?wsdl"); // soap - Forbinder til det navn serveren udgiver sig på "GalgeServer"
         QName qname = new QName("http://galgeleg/", "GalgelogikService");
         
         Service service = Service.create(url, qname);
@@ -53,7 +53,7 @@ public class GalgeKlientTilServer {
         System.out.println("Tillykke!");
         System.out.println("Dit adgangskode var rigtigt.");
         System.out.println("Spillet starter nu. Du må max gætte forkert 7 gange");
-        
+        spil.nulstil();
         while (truee)
         {
             System.out.println("Indtast ét bogstav");

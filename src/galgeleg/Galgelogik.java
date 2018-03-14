@@ -22,7 +22,6 @@ import org.json.JSONObject;
 
 
 @WebService(endpointInterface = "galgeleg.GalgeInterface")
-
 public class Galgelogik extends UnicastRemoteObject implements GalgeInterface{
        
     //bruger login
@@ -187,7 +186,6 @@ public class Galgelogik extends UnicastRemoteObject implements GalgeInterface{
     String svar = res.readEntity(String.class);
     //System.out.println(svar);
     try {
-
 //Object ole = res.getEntity();
     //Parse svar som et JSON-objekt
     JSONObject json = new JSONObject(svar);
@@ -195,17 +193,20 @@ public class Galgelogik extends UnicastRemoteObject implements GalgeInterface{
     String data = "";
     //data += json.getJSONArray("Live").getJSONObject(0).getJSONObject("Now").getString("Description");
     data += json.getJSONObject("NowNext").getJSONObject("Now").getString("Description");
+    //data += json.getJSONObject("NowNext").getJSONObject("Next").getJSONObject("0").getString("Description");
     System.out.println("data = " + data);
     muligeOrd.clear();
     muligeOrd.addAll(new HashSet<String>(Arrays.asList(data.split(" "))));
-    
+    data = data.replaceAll(",","");
+    data = data.replaceAll(".", "");
+    data = data.toLowerCase();
     } catch (Exception e) {
     e.printStackTrace();
     }
       /*    String data = hentUrl("https://dr.dk");
     //System.out.println("data = " + data);
 
-    data = data.substring(data.indexOf("<body")). // fjern headere
+    data = data.substring(data.indexOf("<body")). // fordetjern headere
             replaceAll("<.+?>", " ").toLowerCase(). // fjern tags
             replaceAll("&#198;", "æ"). // erstat HTML-tegn
             replaceAll("&#230;", "æ"). // erstat HTML-tegn
